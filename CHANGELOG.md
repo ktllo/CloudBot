@@ -14,8 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change user lookup logic in last.fm plugin
 - Refactor minecraft_ping plugin for updated mcstatus library
 - Expand youtube.py error information
-- Ensure event order is deterministic
 ### Fixed
+- Ensure event order is deterministic
 - Fix matching exception in horoscope test
 - Fix youtube.py ISO time parse
 - Fix grammatical error in food sentence (beer)
@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix FML random URL
 ### Removed
 - twitch.py removed due to outdated API and lack of maintainer
+- Remove unused run_before events/tasks
 
 ## [1.3.0] 2020-03-17
 ### Added
