@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed handling of colons in core IRC parser
 - Fix FML random URL
 - Ensure hooks are triggered according to priority
+- chan_track: Ensure hooks acquire the needed locks
 ### Removed
 - twitch.py removed due to outdated API and lack of maintainer
 - Remove unused run_before events/tasks
