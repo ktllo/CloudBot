@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update mylife.py for website changes
 - Fixed handling of colons in core IRC parser
 - Fix FML random URL
+- Ensure hooks are triggered according to priority
 ### Removed
 - twitch.py removed due to outdated API and lack of maintainer
 - Remove unused run_before events/tasks
