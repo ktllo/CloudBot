@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change user lookup logic in last.fm plugin
 - Refactor minecraft_ping plugin for updated mcstatus library
 - Expand youtube.py error information
+- Ensure event order is deterministic
 ### Fixed
 - Fix matching exception in horoscope test
 - Fix youtube.py ISO time parse
