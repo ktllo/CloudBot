@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change user lookup logic in last.fm plugin
 - Refactor minecraft_ping plugin for updated mcstatus library
 - Expand youtube.py error information
+- Make event queueing happen non-async
 ### Fixed
 - Ensure event order is deterministic
 - Fix matching exception in horoscope test
