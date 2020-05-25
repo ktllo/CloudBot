@@ -11,12 +11,10 @@ class TestLineParsing:
         return {k: v for k, v in dict(event).items() if not callable(v)}
 
     def test_data_received(self):
-        conn, out, proto = self.make_proto()
+        _, out, proto = self.make_proto()
         proto.data_received(
             b":server.host COMMAND this is :a command\r\n:server.host PRIVMSG me :hi\r\n"
         )
-
-        conn.loop.run_until_complete(asyncio.gather(*Task.all_tasks(conn.loop)))
 
         assert out == [
             {
@@ -62,10 +60,10 @@ class TestLineParsing:
     def make_proto(self):
         conn = MagicMock()
         conn.nick = "me"
-        conn.loop = asyncio.get_event_loop_policy().new_event_loop()
+        conn.loop = conn.bot.loop = asyncio.get_event_loop_policy().new_event_loop()
         out = []
 
-        async def func(e):
+        def func(e):
             out.append(self._filter_event(e))
 
         conn.bot.process = func
@@ -73,12 +71,10 @@ class TestLineParsing:
         return conn, out, proto
 
     def test_broken_line_doesnt_interrupt(self):
-        conn, out, proto = self.make_proto()
+        _, out, proto = self.make_proto()
         proto.data_received(
             b":server.host COMMAND this is :a command\r\nPRIVMSG\r\n:server.host PRIVMSG me :hi\r\n"
         )
-
-        conn.loop.run_until_complete(asyncio.gather(*Task.all_tasks(conn.loop)))
 
         assert out == [
             {
