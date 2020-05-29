@@ -4,11 +4,12 @@
     ],
     "parts": {
         "size": [
-            "a small",
-            "a medium",
-            "a large",
-            "an enormous",
-            "a half-empty"
+            "small",
+            "medium",
+            "large",
+            "enormous",
+            "half-empty",
+            "half-full"
         ],
         "container": [
             "glass",
@@ -100,6 +101,7 @@
             "American Adjunct Lager",
             "American Amber lager",
             "American Imperial Pilsner",
+            "Danish Pilsner",
             "American Pale lager",
             "California Common",
             "Light Lager",

@@ -100,7 +100,10 @@
             "cookie dough flavoured",
             "lime flavoured milk",
             "sesame seed milk",
-            "Skittle milk"
+            "Skittle milk",
+	    "banana milk",
+	    "strawberry milk",
+	    "double cream milk"
         ]
     }
 }

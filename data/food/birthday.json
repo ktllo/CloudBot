@@ -20,7 +20,8 @@
             "small",
             "medium-sized",
             "large",
-            "extra large"
+            "extra large",
+	    "monster sized"
         ],
         "type": [
             "Chocolate",

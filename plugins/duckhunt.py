@@ -254,10 +254,10 @@ def start_hunt(db, chan, message, conn):
     set_game_state(db, conn, chan, active=True)
     set_ducktime(chan, conn.name)
     message(
-        "Gooses have been spotted nearby. "
+        "geese have been spotted nearby. "
         "See how many you can shoot or save. "
         "use .bang to shoot or .befriend to save them. "
-        "NOTE: Gooses now appear as a function of time and channel activity.",
+        "NOTE: geese now appear as a function of time and channel activity.",
         chan
     )
 
@@ -309,12 +309,12 @@ def no_duck_kick(db, text, chan, conn, notice_doc):
 
     if text.lower() == 'enable':
         set_game_state(db, conn, chan, duck_kick=True)
-        return "users will now be kicked for shooting or befriending non-existent gooses. The bot needs to have " \
+        return "users will now be kicked for shooting or befriending non-existent geese. The bot needs to have " \
                "appropriate flags to be able to kick users for this to work."
 
     if text.lower() == 'disable':
         set_game_state(db, conn, chan, duck_kick=False)
-        return "kicking for non-existent gooses has been disabled."
+        return "kicking for non-existent geese has been disabled."
 
     notice_doc()
     return None
@@ -479,8 +479,8 @@ def attack(event, nick, chan, db, conn, attack_type):
         miss = [
             "The goose didn't want to be friends, maybe next time. :(",
             "Well this is awkward, the goose needs to think about it.",
-            "The goose said no, maybe bribe it with some pizza? Gooses love pizza don't they?",
-            "Who knew gooses could be so picky?"
+            "The goose said no, maybe bribe it with some pizza? geese love pizza don't they?",
+            "Who knew geese could be so picky?"
         ]
         no_duck = "You tried befriending a non-existent goose. That's freaking creepy."
         msg = "{} you befriended a goose in {:.3f} seconds! You have made friends with {} in {}."
@@ -674,7 +674,7 @@ def display_scores(score_type: ScoreType, event, text, chan, conn, db):
     chan_pfx = "Goose {noun} scores in {chan}: ".format(
         noun=score_type.noun, chan=chan
     )
-    no_ducks = "It appears no one has {verb} any gooses yet."
+    no_ducks = "It appears no one has {verb} any geese yet."
 
     out = global_pfx if text else chan_pfx
 
@@ -863,7 +863,7 @@ def duck_merge(text, conn, db, message):
         return "There are no goose scores to migrate from {}".format(oldnick)
 
 
-@hook.command("gooses", autohelp=False)
+@hook.command("geese", autohelp=False)
 def ducks_user(text, nick, chan, conn, db, message):
     """<nick> - Prints a users duck stats. If no nick is input it will check the calling username.
 
@@ -962,7 +962,7 @@ def duck_stats(chan, conn, db, message):
         friendchan, friendscore = sorted(ducks["friendchan"].items(), key=operator.itemgetter(1), reverse=True)[0]
         message(
             "\x02Duck Stats:\x02 {:,} killed and {:,} befriended in \x02{}\x02. "
-            "Across {} \x02{:,}\x02 gooses have been killed and \x02{:,}\x02 befriended. "
+            "Across {} \x02{:,}\x02 geese have been killed and \x02{:,}\x02 befriended. "
             "\x02Top Channels:\x02 \x02{}\x02 with {} and \x02{}\x02 with {}".format(
                 ducks["chankilled"], ducks["chanfriends"], chan, pluralize_auto(ducks["chans"], "channel"),
                 ducks["killed"], ducks["friend"],

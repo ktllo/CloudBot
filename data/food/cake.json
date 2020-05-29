@@ -23,6 +23,7 @@
             "little",
             "mid-sized",
             "medium-sized",
+            "monster sized",
             "large",
             "gigantic"
         ],
@@ -42,7 +43,9 @@
             "Red Velvet",
             "Stack",
             "Welsh",
-            "Yokan"
+            "Yokan",
+	    "Potato",
+	    "Squid"
         ],
         "sidesize": [
             "small",
