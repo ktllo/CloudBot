@@ -55,7 +55,10 @@
             "Large bowl of",
             "Small bowl of",
             "Cup of",
-            "Gallon of",
+            "Imperial Gallon of",
+            "American fluid Gallon of",
+            "Imperial Pint of",
+            "American Pint of",
             "Medium bowl of",
             "Bread bowl of"
         ],
@@ -63,7 +66,8 @@
             "Some Croutons",
             "A baguette",
             "Sliced apples",
-            "Chicken"
+            "Chicken",
+            "Duck"
         ]
     }
 }
