@@ -4,7 +4,9 @@
     ],
     "parts": {
         "method": [
-            "gives"
+            "gives",
+            "feeds",
+            "ships"
         ],
         "flavor": [
             "tasty",
@@ -17,7 +19,8 @@
         "size": [
             "small",
             "medium-sized",
-            "large"
+            "large",
+            "extra large"
         ],
         "type": [
             "Chocolate",
@@ -34,7 +37,12 @@
             "Red Velvet",
             "Stack",
             "Welsh",
-            "Yokan"
+            "Yokan",
+            "Mango",
+            "Strawberry",
+            "Apple",
+            "Potato",
+            "Black forest"
         ]
     }
 }
