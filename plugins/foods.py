@@ -34,7 +34,6 @@ BASIC_FOOD = (
     BasicFood("pie", "pie"),
     BasicFood("brekkie", "brekkie", "brekkie", "brekky"),
     BasicFood("icecream", "icecream"),
-    BasicFood("doobie", "a doobie"),
     BasicFood("wine", "wine"),
     BasicFood("pizza", "pizza"),
     BasicFood("vpizza", "pizza"),
