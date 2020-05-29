@@ -1,11 +1,11 @@
 {
     "templates": [
-        "{gives} {user} {sauce} {crust} pizza with {topping}, {topping} and {cheese}, finished with {garnish}!",
-        "{gives} {user} {sauce} cheeseless {crust} pizza with {topping}, {topping} and {topping}, finished with {garnish}!",
-        "{gives} {user} {sauce} {crust} pizza with {topping}, {cheese}, and {garnish}!",
-        "{gives} {user} {sauce} {crust} pizza with {topping}, {topping} and {cheese}, with some {garnish} to bring everything together!",
-        "{gives} {user} {sauce} {crust} pizza with {topping}, {cheese} and {cheese}, finished with {garnish}!",
-        "{gives} {user} {sauce} {crust} pizza with {cheese}, {cheese}, {cheese}, and no vegetables in sight!"
+        "{gives} {user} a yucky {sauce} {crust} pizza with {topping}, {topping} and {cheese}, finished with {garnish}!",
+        "{gives} {user} a yucky {sauce} cheeseless {crust} pizza with {topping}, {topping} and {topping}, finished with {garnish}!",
+        "{gives} {user} a yucky {sauce} {crust} pizza with {topping}, {cheese}, and {garnish}!",
+        "{gives} {user} a yucky {sauce} {crust} pizza with {topping}, {topping} and {cheese}, with some {garnish} to bring everything together!",
+        "{gives} {user} a yucky {sauce} {crust} pizza with {topping}, {cheese} and {cheese}, finished with {garnish}!",
+        "{gives} {user} a yucky {sauce} {crust} pizza with {cheese}, {cheese}, {cheese}, and no vegetables in sight!"
     ],
     "parts": {
         "gives": [
