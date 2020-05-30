@@ -484,7 +484,7 @@ def attack(event, nick, chan, db, conn, attack_type):
         ]
         no_duck = "You tried befriending a non-existent goose. That's freaking creepy."
         msg = "{} you befriended a goose in {:.3f} seconds! You have made friends with {} in {}."
-        scripter_msg = "You tried friending that duck in {:.3f} seconds, that's mighty fast. " \
+        scripter_msg = "You tried friending that goose in {:.3f} seconds, that's mighty fast. " \
                        "Are you sure you aren't a script? Take a 1 hour cool down."
         attack_type = "friend"
 
@@ -542,7 +542,7 @@ def attack(event, nick, chan, db, conn, attack_type):
 
     event.message(msg.format(
         nick, shoot - deploy,
-        pluralize_auto(score, "duck"), chan
+        "geese", chan
     ))
     set_ducktime(chan, conn.name)
 
@@ -921,12 +921,12 @@ def ducks_user(text, nick, chan, conn, db, message):
         kill_average = int(ducks["killed"] / ducks["chans"])
         friend_average = int(ducks["friend"] / ducks["chans"])
         message(
-            "\x02{}'s\x02 duck stats: \x02{}\x02 killed and \x02{}\x02 befriended in {}. "
+            "\x02{}'s\x02 goose stats: \x02{}\x02 killed and \x02{}\x02 befriended in {}. "
             "Across {}: \x02{}\x02 killed and \x02{}\x02 befriended. "
             "Averaging \x02{}\x02 and \x02{}\x02 per channel.".format(
-                name, pluralize_auto(ducks["chankilled"], "goose"), pluralize_auto(ducks["chanfriends"], "goose"),
+                name, "geese", "geese",
                 chan, pluralize_auto(ducks["chans"], "channel"),
-                pluralize_auto(ducks["killed"], "goose"), pluralize_auto(ducks["friend"], "goose"),
+                "geese", "geese",
                 pluralize_auto(kill_average, "kill"), pluralize_auto(friend_average, "friend")
             )
         )
@@ -968,7 +968,7 @@ def duck_stats(chan, conn, db, message):
         killerchan, killscore = sorted(ducks["killchan"].items(), key=operator.itemgetter(1), reverse=True)[0]
         friendchan, friendscore = sorted(ducks["friendchan"].items(), key=operator.itemgetter(1), reverse=True)[0]
         message(
-            "\x02Duck Stats:\x02 {:,} killed and {:,} befriended in \x02{}\x02. "
+            "\x02Geese Stats:\x02 {:,} killed and {:,} befriended in \x02{}\x02. "
             "Across {} \x02{:,}\x02 geese have been killed and \x02{:,}\x02 befriended. "
             "\x02Top Channels:\x02 \x02{}\x02 with {} and \x02{}\x02 with {}".format(
                 ducks["chankilled"], ducks["chanfriends"], chan, pluralize_auto(ducks["chans"], "channel"),
