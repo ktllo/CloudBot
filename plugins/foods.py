@@ -105,7 +105,7 @@ def basic_format(nick, text, data, **kwargs):
 def basic_food(food):
     def func(text, nick, action, is_nick_valid):
         if not is_nick_valid(text):
-            return "I can't give {} to that user.".format(food.unit)
+            return "I can't give {} to that user, may be try CamelCase and remove the space?".format(food.unit)
 
         action(basic_format(nick, text, basic_food_data[food.name]))
 

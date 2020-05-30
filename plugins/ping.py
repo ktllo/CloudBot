@@ -33,8 +33,8 @@ def ping(text, reply):
     # check for a second argument and set the ping count
     if len(args) > 1:
         count = int(args[1])
-        if count > 20:
-            count = 20
+        if count > 10:
+            count = 10
     else:
         count = 5
 

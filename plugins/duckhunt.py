@@ -293,9 +293,9 @@ def stop_hunt(db, chan, conn):
     return "There is no game running in {}.".format(chan)
 
 
-@hook.command("duckkick", permissions=["chanop", "op", "botcontrol"])
+@hook.command("goosekick", permissions=["chanop", "op", "botcontrol"])
 def no_duck_kick(db, text, chan, conn, notice_doc):
-    """<enable|disable> - If the bot has OP or half-op in the channel you can specify .duckkick enable|disable so that
+    """<enable|disable> - If the bot has OP or half-op in the channel you can specify .goosekick enable|disable so that
     people are kicked for shooting or befriending a non-existent goose. Default is off.
 
     :type db: sqlalchemy.orm.Session
@@ -512,13 +512,20 @@ def attack(event, nick, chan, db, conn, attack_type):
 
     chance = hit_or_miss(deploy, shoot)
     if not random.random() <= chance and chance > .05:
-        out = random.choice(miss) + " You can try again in 10 seconds."
-        scripters[nick.lower()] = shoot + 10
+        if attack_type == "shoot":
+            out = random.choice(miss) + " You can try again in 10 seconds."
+            scripters[nick.lower()] = shoot + 10
+        else:
+            out = random.choice(miss) + " You can try again in 3 seconds."
+            scripters[nick.lower()] = shoot + 3
         return out
 
     if chance == .05:
         out += scripter_msg.format(shoot - deploy)
-        scripters[nick.lower()] = shoot + 3600
+        if attack_type == "shoot":
+            scripters[nick.lower()] = shoot + 3600
+        else:
+            scripters[nick.lower()] = shoot + 360
         return random.choice(miss) + " " + out
 
     status.duck_status = 2
@@ -530,7 +537,7 @@ def attack(event, nick, chan, db, conn, attack_type):
         score = update_score(nick, chan, db, conn, **args)[attack_type]
     except Exception:
         status.duck_status = 1
-        event.reply("An unknown error has occurred.")
+        event.reply("An unknown error has occurred. Please bring the m=bug to LordLion")
         raise
 
     event.message(msg.format(
@@ -542,7 +549,7 @@ def attack(event, nick, chan, db, conn, attack_type):
 
 @hook.command("bang", autohelp=False)
 def bang(nick, chan, db, conn, event):
-    """- when there is a duck on the loose use this command to shoot it.
+    """- when there is a goose on the loose use this command to shoot it.
 
     :type event: cloudbot.event.Event
     :type nick: str
@@ -556,7 +563,7 @@ def bang(nick, chan, db, conn, event):
 
 @hook.command("befriend", autohelp=False)
 def befriend(nick, chan, db, conn, event):
-    """- when there is a duck on the loose use this command to befriend it before someone else shoots it.
+    """- when there is a goose on the loose use this command to befriend it before someone else shoots it.
 
     :type event: cloudbot.event.Event
     :type nick: str
@@ -699,7 +706,7 @@ def display_scores(score_type: ScoreType, event, text, chan, conn, db):
 
 @hook.command("friends", autohelp=False)
 def friends(text, event, chan, conn, db):
-    """[{global|average}] - Prints a list of the top duck friends in the
+    """[{global|average}] - Prints a list of the top goose friends in the
     channel, if 'global' is specified all channels in the database are
     included.
 
@@ -714,7 +721,7 @@ def friends(text, event, chan, conn, db):
 
 @hook.command("killers", autohelp=False)
 def killers(text, event, chan, conn, db):
-    """[{global|average}] - Prints a list of the top duck killers in the
+    """[{global|average}] - Prints a list of the top goose killers in the
     channel, if 'global' is specified all channels in the database are
     included.
 
@@ -727,7 +734,7 @@ def killers(text, event, chan, conn, db):
     return display_scores(SCORE_TYPES['killer'], event, text, chan, conn, db)
 
 
-@hook.command("duckforgive", permissions=["op", "ignore"])
+@hook.command("gooseforgive", permissions=["op", "ignore"])
 def duckforgive(text):
     """<nick> - Allows people to be removed from the mandatory cooldown period.
 
@@ -743,7 +750,7 @@ def duckforgive(text):
 @hook.command("hunt_opt_out", permissions=["op", "ignore"], autohelp=False)
 def hunt_opt_out(text, chan, db, conn):
     """[{add <chan>|remove <chan>|list}] - Running this command without any arguments displays the status of the
-    current channel. hunt_opt_out add #channel will disable all duck hunt commands in the specified channel.
+    current channel. hunt_opt_out add #channel will disable all goose hunt commands in the specified channel.
     hunt_opt_out remove #channel will re-enable the game for the specified channel.
 
     :type text: str
@@ -779,7 +786,7 @@ def hunt_opt_out(text, chan, db, conn):
         db.execute(query)
         db.commit()
         load_optout(db)
-        return "The duckhunt has been successfully disabled in {}.".format(channel)
+        return "The goosehunt has been successfully disabled in {}.".format(channel)
 
     if command.lower() == "remove":
         if not is_opt_out(conn.name, channel):
@@ -793,8 +800,8 @@ def hunt_opt_out(text, chan, db, conn):
 
 @hook.command("goosemerge", permissions=["botcontrol"])
 def duck_merge(text, conn, db, message):
-    """<user1> <user2> - Moves the duck scores from one nick to another nick. Accepts two nicks as input the first will
-    have their duck scores removed the second will have the first score added. Warning this cannot be undone.
+    """<user1> <user2> - Moves the geese scores from one nick to another nick. Accepts two nicks as input the first will
+    have their goose scores removed the second will have the first score added. Warning this cannot be undone.
 
     :type text: str
     :type conn: cloudbot.client.Client
@@ -865,7 +872,7 @@ def duck_merge(text, conn, db, message):
 
 @hook.command("geese", autohelp=False)
 def ducks_user(text, nick, chan, conn, db, message):
-    """<nick> - Prints a users duck stats. If no nick is input it will check the calling username.
+    """<nick> - Prints a users geese stats. If no nick is input it will check the calling username.
 
     :type text: str
     :type nick: str
@@ -907,7 +914,7 @@ def ducks_user(text, nick, chan, conn, db, message):
         # Check if the user has only participated in the hunt in this channel
         if ducks["chans"] == 1 and has_hunted_in_chan:
             message("{} has killed {} and befriended {} in {}.".format(
-                name, pluralize_auto(ducks["chankilled"], "goose"), pluralize_auto(ducks["chanfriends"], "goose"), chan
+                name, "geese", "geese", chan
             ))
             return
 
@@ -927,7 +934,7 @@ def ducks_user(text, nick, chan, conn, db, message):
         return "It appears {} has not participated in the goose hunt.".format(name)
 
 
-@hook.command("duckstats", autohelp=False)
+@hook.command("goosestats", autohelp=False)
 def duck_stats(chan, conn, db, message):
     """- Prints duck statistics for the entire channel and totals for the network.
 

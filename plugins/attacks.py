@@ -17,10 +17,7 @@ class RespType(Enum):
 
 def is_self(conn, target):
     """ Checks if a string is "****self" or contains conn.name. """
-    return bool(re.search(
-        "(^..?.?.?self|{})".format(re.escape(conn.nick)), target, re.I
-    ))
-
+    return false
 
 attack_data = defaultdict(dict)
 

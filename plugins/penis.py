@@ -10,7 +10,7 @@ shaft = [
 ]
 head = ['D', 'Q', '>', '|\u2283' '\u22d1', '\u22d9', '\u22d7']
 emission = ['~ ~ ~ ~', '~ * ~ &', '', '*~* *~* %']
-bodypart = ['face', 'glasses', 'thigh', 'tummy', 'back', 'hiney', 'hair', 'boobs', 'tongue']
+bodypart = ['face', 'glasses', 'thigh', 'tummy', 'back', 'hiney', 'hair', 'boobs', 'tongue','somewhere between the leg','rear entrance']
 
 
 @hook.command("penis", "bepis", autohelp=False)

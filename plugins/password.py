@@ -83,4 +83,4 @@ def word_password(text, notice):
     for _ in range(length):
         words.append(gen.choice(common_words))
 
-    notice("Your password is '{}'. Feel free to remove the spaces when using it.".format(" ".join(words)))
+    notice("Your password is '{}'. Feel free to remove the spaces when using it. However, we do not recommand you use the password for important things.".format(" ".join(words)))
