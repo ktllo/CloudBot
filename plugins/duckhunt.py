@@ -471,7 +471,7 @@ def attack(event, nick, chan, db, conn, attack_type):
             "WTF?! Who are you, Kim Jong Un firing missiles? You missed."
         ]
         no_duck = "There is no goose! What are you shooting at?"
-        msg = "{} you shot a goose in {:.3f} seconds! You have killed {} in {}."
+        msg = "{} you shot a goose in {:.3f} seconds! You have killed {} geese in {}."
         scripter_msg = "You pulled the trigger in {:.3f} seconds, that's mighty fast. " \
                        "Are you sure you aren't a script? Take a 1 hour cool down."
         attack_type = "shoot"
@@ -483,7 +483,7 @@ def attack(event, nick, chan, db, conn, attack_type):
             "Who knew geese could be so picky?"
         ]
         no_duck = "You tried befriending a non-existent goose. That's freaking creepy."
-        msg = "{} you befriended a goose in {:.3f} seconds! You have made friends with {} in {}."
+        msg = "{} you befriended a goose in {:.3f} seconds! You have made friends with {} geese in {}."
         scripter_msg = "You tried friending that goose in {:.3f} seconds, that's mighty fast. " \
                        "Are you sure you aren't a script? Take a 1 hour cool down."
         attack_type = "friend"
@@ -511,13 +511,12 @@ def attack(event, nick, chan, db, conn, attack_type):
             return
 
     chance = hit_or_miss(deploy, shoot)
-    if not random.random() <= chance and chance > .05:
-        if attack_type == "shoot":
-            out = random.choice(miss) + " You can try again in 10 seconds."
-            scripters[nick.lower()] = shoot + 10
-        else:
-            out = random.choice(miss) + " You can try again in 3 seconds."
-            scripters[nick.lower()] = shoot + 3
+    if not random.random() <= chance and chance > .05 and attack_type == "shoot":
+        out = random.choice(miss) + " You can try again in 10 seconds."
+        scripters[nick.lower()] = shoot + 10
+    elif not random.random()*0.75 <= chance and chance > .05 and attack_type == "friend":
+        out = random.choice(miss) + " You can try again in 3 seconds."
+        scripters[nick.lower()] = shoot + 3
         return out
 
     if chance == .05:
@@ -542,7 +541,7 @@ def attack(event, nick, chan, db, conn, attack_type):
 
     event.message(msg.format(
         nick, shoot - deploy,
-        "geese", chan
+        score , chan
     ))
     set_ducktime(chan, conn.name)
 
@@ -913,8 +912,8 @@ def ducks_user(text, nick, chan, conn, db, message):
 
         # Check if the user has only participated in the hunt in this channel
         if ducks["chans"] == 1 and has_hunted_in_chan:
-            message("{} has killed {} and befriended {} in {}.".format(
-                name, "geese", "geese", chan
+            message("{} has killed {} geese and befriended {} geese in {}.".format(
+                name, ducks["killed"], ducks["friend"], chan
             ))
             return
 
