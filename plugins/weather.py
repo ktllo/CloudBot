@@ -1,17 +1,18 @@
 import math
 from fractions import Fraction
 from typing import Optional
-
+import logging
 import googlemaps
-from forecastiopy.ForecastIO import ForecastIO
 from googlemaps.exceptions import ApiError
 from sqlalchemy import Table, Column, PrimaryKeyConstraint, String
-
+from pyowm import OWM
+from pyowm.utils import timestamps
 from cloudbot import hook
 from cloudbot.util import web, database, colors
+from datetime import datetime
 
 Api = Optional[googlemaps.Client]
-
+logger = logging.getLogger("cloudbot")
 
 class PluginData:
     maps_api = None  # type: Api
@@ -151,7 +152,7 @@ def check_and_parse(event, db):
     """
     Check for the API keys and parse the location from user input
     """
-    ds_key = event.bot.config.get_api_key("darksky")
+    ds_key = event.bot.config.get_api_key("owapi")
     if not ds_key:
         return None, "This command requires a DarkSky API key."
 
@@ -181,13 +182,13 @@ def check_and_parse(event, db):
     except LocationNotFound as e:
         return None, str(e)
 
-    fio = ForecastIO(
+    """fio = ForecastIO(
         ds_key, units=ForecastIO.UNITS_US,
         latitude=location_data['lat'],
         longitude=location_data['lng']
-    )
-
-    return (location_data, fio), None
+    )"""
+    logger.info("Log entry")
+    return (location_data, OWM(ds_key)), None
 
 
 @hook.command("weather", "we", autohelp=False)
@@ -198,33 +199,22 @@ def weather(reply, db, triggered_prefix, event):
         return err
 
     location_data, fio = res
-
-    daily_conditions = fio.get_daily()['data']
-    current = fio.get_currently()
-    today = daily_conditions[0]
-    wind_speed = current['windSpeed']
-    today_high = today['temperatureHigh']
-    today_low = today['temperatureLow']
-    current.update(
-        name='Current',
-        wind_direction=bearing_to_card(current['windBearing']),
-        wind_speed_mph=wind_speed,
-        wind_speed_kph=mph_to_kph(wind_speed),
-        summary=current['summary'].rstrip('.'),
-        temp_f=round_temp(current['temperature']),
-        temp_c=round_temp(convert_f2c(current['temperature'])),
-        temp_high_f=round_temp(today_high),
-        temp_high_c=round_temp(convert_f2c(today_high)),
-        temp_low_f=round_temp(today_low),
-        temp_low_c=round_temp(convert_f2c(today_low)),
-    )
+    
+    mgr = fio.weather_manager()
+    weatherObservation = mgr.weather_at_coords(location_data['lat'], location_data['lng'])
+    weather = weatherObservation.weather
+    tempC = weather.temperature('celsius')
+    tempF = weather.temperature('fahrenheit')
+    windMPH = weather.wind(unit='miles_hour')
+    status = weather.detailed_status
+    
 
     parts = [
-        ('Current', "{summary}, {temp_f}F/{temp_c}C"),
-        ('High', "{temp_high_f}F/{temp_high_c}C"),
-        ('Low', "{temp_low_f}F/{temp_low_c}C"),
-        ('Humidity', "{humidity:.0%}"),
-        ('Wind', "{wind_speed_mph:.0f}MPH/{wind_speed_kph:.0f}KPH {wind_direction}"),
+        ('$(dgreen)Current', weather.detailed_status+", "+str(round_temp(tempF['temp']))+"F/"+str(round_temp(tempC['temp']))+"C"),
+        ('$(red)High', str(round_temp(tempF['temp_max']))+"F/"+str(round_temp(tempC['temp_max']))+"C"),
+        ('$(blue)Low', str(round_temp(tempF['temp_min']))+"F/"+str(round_temp(tempC['temp_min']))+"C"),
+        ('Humidity', str(round(weather.humidity))+"%"),
+        ('Wind', str(round(windMPH["speed"]))+"MPH/"+str(round(mph_to_kph(windMPH["speed"])))+"KPH "+bearing_to_card(windMPH["deg"])),
     ]
 
     current_str = '; '.join(
@@ -232,23 +222,16 @@ def weather(reply, db, triggered_prefix, event):
         for part in parts
     )
 
-    url = web.try_shorten(
-        'https://darksky.net/forecast/{lat:.3f},{lng:.3f}'.format_map(
-            location_data
-        )
-    )
+    
 
     reply(
         colors.parse(
             "{current_str} -- "
             "{place} - "
-            "$(ul){url}$(clear) "
-            "($(i)To get a forecast, use {cmd_prefix}fc$(i))"
+            "$(clear) "
         ).format(
             place=location_data['address'],
-            current_str=current_str.format_map(current),
-            url=url,
-            cmd_prefix=triggered_prefix,
+            current_str=current_str
         )
     )
 
@@ -262,56 +245,12 @@ def forecast(reply, db, event):
 
     location_data, fio = res
 
-    daily_conditions = fio.get_daily()['data']
-    today, tomorrow, *three_days = daily_conditions[:5]
+    mgr = fio.weather_manager()
+    forecast = mgr.forecast_at_coords(location_data['lat'], location_data['lng'],'daily',2)
 
-    today['name'] = 'Today'
-    tomorrow['name'] = 'Tomorrow'
+    if not forecast:
+        reply("No forecast available for "+location_data['address'])
 
-    for day_fc in (today, tomorrow):
-        wind_speed = day_fc['windSpeed']
-        day_fc.update(
-            wind_direction=bearing_to_card(day_fc['windBearing']),
-            wind_speed_mph=wind_speed,
-            wind_speed_kph=mph_to_kph(wind_speed),
-            summary=day_fc['summary'].rstrip('.'),
-        )
-
-    for fc_data in (today, tomorrow, *three_days):
-        high = fc_data['temperatureHigh']
-        low = fc_data['temperatureLow']
-        fc_data.update(
-            temp_high_f=round_temp(high),
-            temp_high_c=round_temp(convert_f2c(high)),
-            temp_low_f=round_temp(low),
-            temp_low_c=round_temp(convert_f2c(low)),
-        )
-
-    parts = [
-        ('High', "{temp_high_f:.0f}F/{temp_high_c:.0f}C"),
-        ('Low', "{temp_low_f:.0f}F/{temp_low_c:.0f}C"),
-        ('Humidity', "{humidity:.0%}"),
-        ('Wind', "{wind_speed_mph:.0f}MPH/{wind_speed_kph:.0f}KPH {wind_direction}"),
-    ]
-
-    day_str = colors.parse("$(b){name}$(b): {summary}; ") + '; '.join(
-        '{}: {}'.format(part[0], part[1])
-        for part in parts
-    )
-
-    url = web.try_shorten(
-        'https://darksky.net/forecast/{lat:.3f},{lng:.3f}'.format_map(
-            location_data
-        )
-    )
-
-    out_format = "{today_str} | {tomorrow_str} -- {place} - $(ul){url}$(clear)"
-
-    reply(
-        colors.parse(out_format).format(
-            today_str=day_str.format_map(today),
-            tomorrow_str=day_str.format_map(tomorrow),
-            place=location_data['address'],
-            url=url
-        )
-    )
+    today = forecast.get_weather_at(datatime.today())
+    tomorrow = forecase.get_weather_at(timestamps.tomorrow())
+    
