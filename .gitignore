@@ -61,7 +61,6 @@ config.json
 .idea/
 /venv/
 .pytest_cache
-
-#*nix stype hidden file and vim backup file
 .*
 *~
+.python-version

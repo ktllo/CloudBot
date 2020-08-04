@@ -1,21 +1,21 @@
 # CloudBot
 ![Python application](https://github.com/TotallyNotRobots/CloudBot/workflows/Python%20application/badge.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/totallynotrobots/cloudbot/badge/gonzobot)](https://www.codefactor.io/repository/github/totallynotrobots/cloudbot/overview/gonzobot)
-[![codebeat badge](https://codebeat.co/badges/3e5866e3-fe94-4c92-9dd7-8fbd616bc2ac)](https://codebeat.co/projects/github-com-totallynotrobots-cloudbot-gonzobot)
-[![codecov](https://codecov.io/gh/TotallyNotRobots/CloudBot/branch/gonzobot/graph/badge.svg)](https://codecov.io/gh/TotallyNotRobots/CloudBot)
+[![CodeFactor](https://www.codefactor.io/repository/github/totallynotrobots/cloudbot/badge/master)](https://www.codefactor.io/repository/github/totallynotrobots/cloudbot/overview/master)
+[![codebeat badge](https://codebeat.co/badges/80316f30-26c0-44ec-b228-9158815d1995)](https://codebeat.co/projects/github-com-totallynotrobots-cloudbot-master)
+[![codecov](https://codecov.io/gh/TotallyNotRobots/CloudBot/branch/master/graph/badge.svg)](https://codecov.io/gh/TotallyNotRobots/CloudBot)
 
 CloudBot is a simple, fast, expandable open-source Python IRC Bot!
 
 ## Getting CloudBot
 
 You have a few options for getting the bot, you can:
-* Clone the `gonzobot` branch of this repository, using `git pull` to update
+* Clone the `master` branch of this repository, using `git pull` to update
 * Download the [latest source]
 * Download the [latest release]
 
 ## Installing CloudBot
 
-Firstly, CloudBot will only run on **Python 3.5.3 or higher**
+Firstly, CloudBot will only run on **Python 3.5.4 or higher**
 
 To install CloudBot on *nix (linux, etc), see [here](docs/installing/nix.md)
 
@@ -84,9 +84,12 @@ This product includes GeoLite2 data created by MaxMind, available from
 
 ![Powered by wordnik](https://www.wordnik.com/img/wordnik_badge_a1.png)
 
+TV information is provided by [TheTVDB.com], but we are not endorsed or certified by [TheTVDB.com] or its affiliates.
+
 Translations are Powered by [Yandex.Translate](https://translate.yandex.com)
 
 This product uses data from <a href="http://wordnik.com">http://wordnik.com</a> in accordance with the wordnik.com API <a href="http://developer.wordnik.com/#!/terms">terms of service</a>.
 
-[latest source]: https://github.com/TotallyNotRobots/CloudBot/archive/gonzobot.zip
+[latest source]: https://github.com/TotallyNotRobots/CloudBot/archive/master.zip
 [latest release]: https://github.com/TotallyNotRobots/CloudBot/releases/latest
+[TheTVDB.com]: https://thetvdb.com/
