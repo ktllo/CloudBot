@@ -923,7 +923,7 @@ def ducks_user(text, nick, chan, conn, db, message):
             "\x02{}'s\x02 goose stats: \x02{}\x02 killed and \x02{}\x02 befriended in {}. "
             "Across {}: \x02{}\x02 killed and \x02{}\x02 befriended. "
             "Averaging \x02{}\x02 and \x02{}\x02 per channel.".format(
-                name, ducks["chankilled"], ducks["chankilled"],
+                name, ducks["chankilled"], ducks["chanfriends"],
                 chan, pluralize_auto(ducks["chans"], "channel"),
                 ducks["killed"], ducks["friend"],
                 pluralize_auto(kill_average, "kill"), pluralize_auto(friend_average, "friend")
