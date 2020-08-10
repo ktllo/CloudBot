@@ -524,7 +524,7 @@ def attack(event, nick, chan, db, conn, attack_type):
         if attack_type == "shoot":
             scripters[nick.lower()] = shoot + 3600
         else:
-            scripters[nick.lower()] = shoot + 360
+            scripters[nick.lower()] = shoot + 3600
         return random.choice(miss) + " " + out
 
     status.duck_status = 2
@@ -536,7 +536,7 @@ def attack(event, nick, chan, db, conn, attack_type):
         score = update_score(nick, chan, db, conn, **args)[attack_type]
     except Exception:
         status.duck_status = 1
-        event.reply("An unknown error has occurred. Please bring the m=bug to LordLion")
+        event.reply("An unknown error has occurred. Please bring the bug to LordLion")
         raise
 
     event.message(msg.format(
@@ -923,7 +923,7 @@ def ducks_user(text, nick, chan, conn, db, message):
             "\x02{}'s\x02 goose stats: \x02{}\x02 killed and \x02{}\x02 befriended in {}. "
             "Across {}: \x02{}\x02 killed and \x02{}\x02 befriended. "
             "Averaging \x02{}\x02 and \x02{}\x02 per channel.".format(
-                name, "geese", "geese",
+                name, ducks["friend"], ducks["killed"],
                 chan, pluralize_auto(ducks["chans"], "channel"),
                 "geese", "geese",
                 pluralize_auto(kill_average, "kill"), pluralize_auto(friend_average, "friend")
