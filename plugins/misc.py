@@ -27,4 +27,4 @@ def ping(text, reply):
 
 @hook.command("feed","feeds")
 def feed(text, nick, chan, db, event, is_nick_valid):
-    action("takes a 3 pounds steak from "+event.conn.nick+" and eat it");
+    return "\x01 actiontakes a 3 pounds steak from "+event.conn.nick+" and eat it\x01";
