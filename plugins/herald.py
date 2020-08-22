@@ -132,7 +132,7 @@ def welcome(nick, message, bot, chan, conn):
     stripped = greet.translate(dict.fromkeys(map(ord, ["\u200b", " ", "\u202f", "\x02"])))
     stripped = colors_re.sub("", stripped)
     greet = re.sub(bino_re, 'flenny', greet)
-    greet = re.sub(offensive_re, ' freespeech oppression ', greet)
+    greet = re.sub(offensive_re, ' <offensive words> ', greet)
 
     words = greet.lower().split()
     cmd = words.pop(0)
@@ -149,6 +149,6 @@ def welcome(nick, message, bot, chan, conn):
         if out:
             message(out, chan)
     elif decoy.search(stripped):
-        message("DECOY DUCK --> {}".format(greet), chan)
+        message("DECOY GOOSE --> {}".format(greet), chan)
     else:
         message("\u200b {}".format(greet), chan)

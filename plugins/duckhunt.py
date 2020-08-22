@@ -861,8 +861,8 @@ def duck_merge(text, conn, db, message):
 
         db.execute(query)
         db.commit()
-        message("Migrated {} and {} from {} to {}".format(
-            pluralize_auto(duckmerge["TKILLS"], "duck kill"), pluralize_auto(duckmerge["TFRIENDS"], "duck friend"),
+        message("Migrated {} kills and {} friends from {} to {}".format(
+            uckmerge["TKILLS"], duckmerge["TFRIENDS"],
             oldnick, newnick
         ))
     else:

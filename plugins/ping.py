@@ -23,7 +23,7 @@ unix_ping_regex = re.compile(r"(\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
 win_ping_regex = re.compile(r"Minimum = (\d+)ms, Maximum = (\d+)ms, Average = (\d+)ms")
 
 
-@hook.command()
+@hook.command("icmp")
 def ping(text, reply):
     """<host> [count] - pings <host> [count] times"""
 
