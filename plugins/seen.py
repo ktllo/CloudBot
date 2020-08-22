@@ -64,10 +64,10 @@ def seen(text, nick, chan, db, event, is_nick_valid):
     """
 
     if event.conn.nick.lower() == text.lower():
-        return "You need to get your eyes checked."
+        return "You need to get your eyes checked, you are looking for me."
 
     if text.lower() == nick.lower():
-        return "Have you looked in a mirror lately?"
+        return "Have you looked in a mirror lately, you are lookign for yourself?"
 
     if not is_nick_valid(text):
         return "I can't look up that name, its impossible to use!"

@@ -12,7 +12,7 @@ Modified By:
 License:
     GPL v3
 """
-
+import codecs
 import os
 import re
 import subprocess
