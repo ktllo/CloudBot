@@ -28,3 +28,7 @@ def ping(text, reply):
 @hook.command("feed","feeds")
 def feed(nick, action):
     action("takes a 3 pounds steak from "+nick+" and eat it");
+
+@hook.command("boo")
+def boo(nick, action):
+    action("jumps");

@@ -862,7 +862,7 @@ def duck_merge(text, conn, db, message):
         db.execute(query)
         db.commit()
         message("Migrated {} kills and {} friends from {} to {}".format(
-            uckmerge["TKILLS"], duckmerge["TFRIENDS"],
+            duckmerge["TKILLS"], duckmerge["TFRIENDS"],
             oldnick, newnick
         ))
     else:
